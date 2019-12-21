@@ -30,52 +30,36 @@ function matrix(n) {
 
   const loop = (x, y, val, d_index, backtrack) => {
 
+    // entire matrix set
     if (val === n * n + 1) {
       return;
     }
 
+    // re-cycle through directions
     if (d_index === dirs.length) {
       return loop(x, y, val, 0, backtrack)
     }
 
+    // just came back, immediately try next direction
     if (backtrack) {
       return loop(x + dirs[d_index].x, y + dirs[d_index].y, val, d_index, false)
     }
 
-    const row = m[x] || [];
-    const curr = row[y];
     const curr_dir = dirs[d_index];
-
-    // const next = (m[x + curr_dir.x] || [])[y + curr_dir.y]
-    // if (next !== null) {
-    //   m[x][y] = val;
-    //   d_index = d_index + 1
-    //   return loop()
-    // }
     
+    const curr = (m[x] || [])[y];
     if (curr !== null) {
+      // go back and switch directions
       const prev_x = x + (curr_dir.x * -1);
       const prev_y = y + (curr_dir.y * -1);
       return loop(prev_x, prev_y, val, d_index + 1, true)
-    } else {
-      m[x][y] = val;
-      const next_x = x + curr_dir.x;
-      const next_y = y + curr_dir.y;
-      return loop(next_x, next_y, val + 1, d_index, false)
     }
 
-    // const next = m[x + dirs[d_index].x][y + dirs[d_index].y];
-
-    // if (next === null) {
-    //   return loop(x + d_index.x, y + d_index.y)
-    // }
-
-    // if (m[x][y] !== null) {
-    //   const prev_x = x + (direction.x * -1);
-    //   const prev_y = y + (direction.y * -1);
-    //   return loop(prev_x, prev_y, val, direction + 1)
-    // }
-
+    // set current and continue
+    m[x][y] = val;
+    const next_x = x + curr_dir.x;
+    const next_y = y + curr_dir.y;
+    return loop(next_x, next_y, val + 1, d_index, false)
   }
 
   loop(0, 0, 1, 0, false)
