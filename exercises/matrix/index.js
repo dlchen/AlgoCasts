@@ -17,52 +17,40 @@
 
 function matrix(n) {
 
-  const dirs = [
-    { _: 'RIGHT', x: 0, y: 1 },
-    { _: 'DOWN', x: 1, y: 0 },
-    { _: 'LEFT', x: 0, y: -1 },
-    { _: 'UP', x: -1, y: 0 }
-  ]
+  const m = new Array(n).fill(null).map(_ => []);
 
-  const m = new Array(n).fill(null).map(_ => new Array(n).fill(null));
+  let val = 1;
+  let start_col = 0;
+  let end_col = n - 1;
+  let start_row = 0;
+  let end_row = n - 1;
 
-  // console.log(m);
+  while (start_col <= end_col && start_row <= end_row) {
 
-  const loop = (x, y, val, d_index, backtrack) => {
-
-    // entire matrix set
-    if (val === n * n + 1) {
-      return;
+    for (let i = start_col; i <= end_col; i++) {
+      m[start_row][i] = val;
+      val += 1;
     }
+    start_row += 1;
 
-    // re-cycle through directions
-    if (d_index === dirs.length) {
-      return loop(x, y, val, 0, backtrack)
+    for (let i = start_row; i <= end_row; i++) {
+      m[i][end_col] = val;
+      val += 1;
     }
+    end_col -= 1;
 
-    // just came back, immediately try next direction
-    if (backtrack) {
-      return loop(x + dirs[d_index].x, y + dirs[d_index].y, val, d_index, false)
+    for (let i = end_col; i >= start_col; i--) {
+      m[end_row][i] = val;
+      val += 1;
     }
+    end_row -= 1;
 
-    const curr_dir = dirs[d_index];
-    
-    const curr = (m[x] || [])[y];
-    if (curr !== null) {
-      // go back and switch directions
-      const prev_x = x + (curr_dir.x * -1);
-      const prev_y = y + (curr_dir.y * -1);
-      return loop(prev_x, prev_y, val, d_index + 1, true)
+    for (let i = end_row; i >= start_row; i--) {
+      m[i][start_col] = val;
+      val += 1;
     }
-
-    // set current and continue
-    m[x][y] = val;
-    const next_x = x + curr_dir.x;
-    const next_y = y + curr_dir.y;
-    return loop(next_x, next_y, val + 1, d_index, false)
+    start_col += 1;
   }
-
-  loop(0, 0, 1, 0, false)
 
   return m;
 }
