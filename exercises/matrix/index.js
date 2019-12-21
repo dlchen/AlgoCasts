@@ -20,55 +20,65 @@ function matrix(n) {
   const m = new Array(n).fill(null).map(_ => []);
   const target = n * n + 1;
 
-  function fillStartRow(val, i, start_col, end_col, start_row, end_row) {
+  let val = 1;
+  let start_col = 0;
+  let end_col = n - 1;
+  let start_row = 0;
+  let end_row = n - 1;
+
+  function fillStartRow(i) {
 
     if (val === target) return;
 
     if (i > end_col) {
-      return fillEndCol(val, start_row + 1, start_col, end_col, start_row + 1, end_row);
+      start_row += 1;
+      return fillEndCol(start_row);
     };
 
-    m[start_row][i] = val;
-    fillStartRow(val + 1, i + 1, start_col, end_col, start_row, end_row)
+    m[start_row][i] = val++;
+    fillStartRow(i + 1)
   }
 
-  function fillEndCol(val, i, start_col, end_col, start_row, end_row) {
+  function fillEndCol(i) {
 
     if (val === target) return;
 
     if (i > end_row) {
-      return fillEndRow(val, end_col - 1, start_col, end_col - 1, start_row, end_row);
+      end_col -= 1;
+      return fillEndRow(end_col);
     }
 
-    m[i][end_col] = val;
-    fillEndCol(val + 1, i + 1, start_col, end_col, start_row, end_row)
+    m[i][end_col] = val++;
+    fillEndCol(i + 1)
   }
 
-  function fillEndRow(val, i, start_col, end_col, start_row, end_row) {
+  function fillEndRow(i) {
 
     if (val === target) return;
 
     if (i < start_col) {
-      return fillStartCol(val, end_row - 1, start_col, end_col, start_row, end_row - 1);
+      end_row -= 1;
+      return fillStartCol(end_row);
     }
 
-    m[end_row][i] = val;
-    fillEndRow(val + 1, i - 1, start_col, end_col, start_row, end_row)
+    m[end_row][i] = val++;
+    fillEndRow(i - 1)
   }
 
-  function fillStartCol(val, i, start_col, end_col, start_row, end_row) {
+  function fillStartCol(i) {
 
     if (val === target) return;
 
     if (i < start_row) {
-      return fillStartRow(val, start_col + 1, start_col + 1, end_col, start_row, end_row);
+      start_col += 1;
+      return fillStartRow(start_col);
     }
 
-    m[i][start_col] = val;
-    fillStartCol(val + 1, i - 1, start_col, end_col, start_row, end_row)
+    m[i][start_col] = val++;
+    fillStartCol(i - 1)
   }
 
-  fillStartRow(1, 0, 0, n - 1, 0, n - 1);
+  fillStartRow(start_col);
 
   return m;
 }
