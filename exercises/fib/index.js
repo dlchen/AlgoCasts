@@ -11,22 +11,30 @@
 
 function fib(n) {
 
-  if (n <= 1) return n;
-
-  let a = 0;
-  let b = 1;
+  const cache = {
+    '0': 0,
+    '1': 1
+  };
 
   const loop = (i) => {
 
-    const c = a + b;
-    a = b;
-    b = c;
-    
-    if (i === n) return c;
-    return loop(i + 1);
+    if (i <= 1) return i;
+
+    const a = cache[i - 1];
+    if (!a) {
+      cache[i - 1] = loop(i - 1);
+    }
+
+    const b = cache[i - 2];
+    if (!b) {
+      cache[i - 2] = loop(i - 2);
+    }
+
+    cache[i] = cache[i - 1] + cache[i - 2];
+    return cache[i]
   }
 
-  return loop(2);
+  return loop(n);
 }
 
 // console.log(fib(39))
