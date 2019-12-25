@@ -11,10 +11,7 @@
 
 function fib(n) {
 
-  const cache = {
-    '0': 0,
-    '1': 1
-  };
+  const cache = [0, 1];
 
   const loop = (i) => {
 
@@ -30,7 +27,7 @@ function fib(n) {
       cache[i - 2] = loop(i - 2);
     }
 
-    cache[i] = cache[i - 1] + cache[i - 2];
+    cache.push(cache[i - 1] + cache[i - 2])
     return cache[i]
   }
 
