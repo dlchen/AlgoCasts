@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "watch": "jest --watch"
+    "watch": "jest --watch --verbose"
+  },
+  "jest": {
+    "testRegex": ".*/exercises/.*/test.js"
   },
   "repository": {
     "type": "git",
