@@ -11,27 +11,32 @@
 
 function fib(n) {
 
-  const cache = [0, 1];
+  const memo = (fn) => {
 
-  const loop = (i) => {
+    const cache = {};
+
+    return (...args) => {
+
+      if (cache[args]) {
+        return cache[args];
+      }
+
+      cache[args] = fn(...args);
+
+      return cache[args];
+    }
+  }
+
+  const fib = (i) => {
 
     if (i <= 1) return i;
 
-    const a = cache[i - 1];
-    if (!a) {
-      cache[i - 1] = loop(i - 1);
-    }
-
-    const b = cache[i - 2];
-    if (!b) {
-      cache[i - 2] = loop(i - 2);
-    }
-
-    cache.push(cache[i - 1] + cache[i - 2])
-    return cache[i]
+    return memoFib(i - 1) + memoFib(i - 2);
   }
 
-  return loop(n);
+  const memoFib = memo(fib);
+
+  return memoFib(n);
 }
 
 // console.log(fib(39))
