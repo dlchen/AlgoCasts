@@ -12,16 +12,19 @@ class Node {
 class LinkedList {
   constructor() {
     this.head = null;
-    this.length = 0;
   }
 
   insertFirst(data) {
     this.head = new Node(data, this.head);
-    this.length++;
   }
 
   size() {
-    return this.length;
+    const getSize = (curr, count) => {
+      if (!curr) return count;
+      return getSize(curr.next, count + 1);
+    };
+
+    return getSize(this.head, 0);
   }
 
   getFirst() {
@@ -38,7 +41,16 @@ class LinkedList {
 
   clear() {
     this.head = null;
-    this.length = 0;
+  }
+
+  removeLast() {
+    if (this.size() <= 1) return this.clear();
+
+    let curr = this.head;
+    while (curr && curr.next && curr.next.next) {
+      curr = curr.next;
+    }
+    curr.next = null;
   }
 }
 
