@@ -104,6 +104,15 @@ class LinkedList {
 
     loop(this.head);
   }
+
+  *[Symbol.iterator]() {
+
+    let curr = this.head;
+    while(curr) {
+      yield curr;
+      curr = curr.next;
+    }
+  }
 }
 
 module.exports = { Node, LinkedList };
