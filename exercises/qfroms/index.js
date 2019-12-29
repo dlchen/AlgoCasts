@@ -21,28 +21,29 @@ class Queue {
     this.stack_b = new Stack();
   }
 
-  add(x) {
-    // move all elem from a to b
-    // push x onto b
-    // move all elem from b to a
-    const transferAll = (target, source) => {
-      const next = source.pop();
-      if (!next) return;
-      target.push(next);
-      transferAll(target, source);
-    }
+  _transferAll(target, source) {
+    const next = source.pop();
+    if (!next) return;
+    target.push(next);
+    this._transferAll(target, source);
+  }
 
-    transferAll(this.stack_b, this.stack_a);
-    this.stack_b.push(x);
-    transferAll(this.stack_a, this.stack_b);
+  add(x) {
+    this.stack_a.push(x);
   }
 
   peek() {
-    return this.stack_a.peek();
+    this._transferAll(this.stack_b, this.stack_a);
+    const first = this.stack_b.peek();
+    this._transferAll(this.stack_a, this.stack_b);
+    return first;
   }
 
   remove() {
-    return this.stack_a.pop();
+    this._transferAll(this.stack_b, this.stack_a);
+    const first = this.stack_b.pop();
+    this._transferAll(this.stack_a, this.stack_b);
+    return first;
   }
 }
 
