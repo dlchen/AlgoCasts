@@ -43,6 +43,11 @@ class LinkedList {
     this.head = null;
   }
 
+  removeFirst() {
+    if (this.size() <= 1) return this.clear();
+    this.head = this.head.next;
+  }
+
   removeLast() {
     if (this.size() <= 1) return this.clear();
 
@@ -68,6 +73,10 @@ class LinkedList {
 
     return iterate(this.head, 0);
   }
+
+  // removeAt(index) {
+
+  // }
 }
 
 module.exports = { Node, LinkedList };
