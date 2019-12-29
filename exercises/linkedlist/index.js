@@ -58,6 +58,16 @@ class LinkedList {
     const last = this.getLast();
     last.next = new Node(data);
   }
+
+  getAt(index) {
+
+    const iterate = (curr, i) => {
+      if (!curr || i === index) return curr;
+      return iterate(curr.next, i + 1);
+    }
+
+    return iterate(this.head, 0);
+  }
 }
 
 module.exports = { Node, LinkedList };
