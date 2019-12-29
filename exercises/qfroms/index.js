@@ -14,6 +14,36 @@
 
 const Stack = require('./stack');
 
-class Queue {}
+class Queue {
+
+  constructor() {
+    this.stack_a = new Stack();
+    this.stack_b = new Stack();
+  }
+
+  add(x) {
+    // move all elem from a to b
+    // push x onto b
+    // move all elem from b to a
+    const transferAll = (target, source) => {
+      const next = source.pop();
+      if (!next) return;
+      target.push(next);
+      transferAll(target, source);
+    }
+
+    transferAll(this.stack_b, this.stack_a);
+    this.stack_b.push(x);
+    transferAll(this.stack_a, this.stack_b);
+  }
+
+  peek() {
+    return this.stack_a.peek();
+  }
+
+  remove() {
+    return this.stack_a.pop();
+  }
+}
 
 module.exports = Queue;
