@@ -12,20 +12,28 @@ class Node {
 class LinkedList {
   constructor() {
     this.head = null;
+    this.length = 0;
   }
 
   insertFirst(data) {
     this.head = new Node(data, this.head);
+    this.length++;
   }
 
   size() {
-    let count = 0;
+    return this.length;
+  }
+
+  getFirst() {
+    return this.head;
+  }
+
+  getLast() {
     let curr = this.head;
-    while (curr) {
-      count++;
+    while (curr && curr.next) {
       curr = curr.next;
     }
-    return count;
+    return curr;
   }
 }
 
