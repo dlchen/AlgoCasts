@@ -93,6 +93,17 @@ class LinkedList {
     const prev = this.getAt(index - 1);
     prev.next = new Node(data, prev.next)
   }
+
+  forEach(callback) {
+
+    const loop = (curr) => {
+      if (!curr) return;
+      callback(curr);
+      loop(curr.next);
+    }
+
+    loop(this.head);
+  }
 }
 
 module.exports = { Node, LinkedList };
