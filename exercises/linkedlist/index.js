@@ -88,9 +88,9 @@ class LinkedList {
   insertAt(data, index) {
 
     if (index === 0) return this.insertFirst(data);
-    if (index >= this.size()) return this.insertLast(data);
 
-    const prev = this.getAt(index - 1);
+    const prev = this.getAt(index - 1) || this.getLast()
+
     prev.next = new Node(data, prev.next)
   }
 
@@ -108,7 +108,7 @@ class LinkedList {
   *[Symbol.iterator]() {
 
     let curr = this.head;
-    while(curr) {
+    while (curr) {
       yield curr;
       curr = curr.next;
     }
