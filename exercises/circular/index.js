@@ -14,14 +14,21 @@
 
 function circular(list) {
 
-  const loop = (slow, fast, start) => {
+  const loop = (slow, fast) => {
 
-    if (!fast.next) return false;
-    if (fast === slow && !start) return true;
-    return loop(slow.next, fast.next.next);
+    if (!fast.next || !fast.next.next) {
+      return false;
+    }
+
+    const nextSlow = slow.next;
+    const nextFast = fast.next.next;
+
+    if (nextFast === nextSlow) return true;
+  
+    return loop(nextSlow, nextFast);
   };
 
-  return loop(list.head, list.head, true);
+  return loop(list.head, list.head);
 }
 
 module.exports = circular;
