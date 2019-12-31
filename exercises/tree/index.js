@@ -23,6 +23,43 @@ class Node {
   }
 }
 
-class Tree {}
+class Tree {
+  constructor() {
+    this.root = null
+  }
+
+  traverseBF(callback) {
+
+    const loop = (node) => {
+
+      if (!node) return;
+      
+      node.children.forEach(node => {
+        callback(node);
+      });
+      node.children.forEach(node => {
+        loop(node);
+      });
+    }
+
+    if (this.root) {
+      callback(this.root);
+    }
+    loop(this.root);
+  }
+
+  traverseDF(callback) {
+
+    const loop = (node) => {
+
+      if (!node) return;
+      callback(node);
+      
+      node.children.forEach(node => loop(node));
+    }
+
+    loop(this.root);
+  }
+}
 
 module.exports = { Tree, Node };
