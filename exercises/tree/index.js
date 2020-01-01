@@ -30,23 +30,24 @@ class Tree {
 
   traverseBF(callback) {
 
-    const queue = [this.root];
-    while (queue[0]) {
-      const curr = queue.shift();
-      callback(curr);
-      queue.push(...curr.children)
-    }
-
-    // const loop = (queue) => {
-
-    //   if (!queue[0]) return;
-
+    // const queue = [this.root];
+    // while (queue[0]) {
     //   const curr = queue.shift();
     //   callback(curr);
-    //   curr.children.forEach(node => queue.push(node))
-    //   loop(queue);
+    //   queue.push(...curr.children)
     // }
-    // loop(queue);
+
+    const loop = (queue) => {
+
+      if (!queue[0]) return;
+
+      const curr = queue.shift();
+      callback(curr);
+      queue.push(...curr.children);
+      loop(queue);
+    }
+
+    loop([this.root])
   }
 
   traverseDF(callback) {
