@@ -39,12 +39,12 @@ class Tree {
 
     const loop = (queue) => {
 
-      if (!queue[0]) return;
+      if (!queue.length) return;
 
-      const curr = queue.shift();
-      callback(curr);
-      queue.push(...curr.children);
-      loop(queue);
+      const head = queue[0];
+      const tail = queue.slice(1);
+      callback(head);
+      loop(tail.concat(...head.children));
     }
 
     loop([this.root])
