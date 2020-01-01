@@ -14,24 +14,21 @@
 function levelWidth(root) {
 
   const WIDTH_END = 'WIDTH_END';
+  const queue = [root, WIDTH_END];
+  const counters = [0];
 
-  const breadth = (queue, depth, widths) => {
-
-    if (queue.length === 1) return widths;
-
-    const head = queue[0];
-    const tail = queue.slice(1);
-
-    if (head === WIDTH_END) {
-      widths[depth + 1] = 0;
-      return breadth(tail.concat([WIDTH_END]), depth + 1, widths);
+  while (queue.length > 1) {
+    const curr = queue.shift();
+    if (curr === WIDTH_END) {
+      counters.push(0);
+      queue.push(WIDTH_END);
+    } else {
+      counters[counters.length - 1]++;
+      queue.push(...curr.children);
     }
-
-    widths[depth] += 1;
-    return breadth(tail.concat(...head.children), depth, widths);
   }
 
-  return breadth([root, WIDTH_END], 0, [0]);
+  return counters;
 }
 
 module.exports = levelWidth;
