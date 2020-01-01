@@ -13,19 +13,15 @@
 
 function levelWidth(root) {
 
-  const WIDTH_END = 'WIDTH_END';
-  const queue = [root, WIDTH_END];
-  const counters = [0];
+  let curr = root ? [root] : [];
+  let next = [];
+  const counters = [];
 
-  while (queue.length > 1) {
-    const curr = queue.shift();
-    if (curr === WIDTH_END) {
-      counters.push(0);
-      queue.push(WIDTH_END);
-    } else {
-      counters[counters.length - 1]++;
-      queue.push(...curr.children);
-    }
+  while (curr.length || next.length) {
+    counters.push(curr.length);
+    curr.forEach(node => next.push(...node.children));
+    curr = next
+    next = [];
   }
 
   return counters;
