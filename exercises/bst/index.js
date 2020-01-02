@@ -21,26 +21,21 @@ class Node {
 
   insert(data) {
 
-    const loop = (node) => {
-
-      if (data <= node.data) {
-        if (node.left) {
-          return loop(node.left);
-        } else {
-          return node.left = new Node(data);
-        }
-      }
-
-      if (data > node.data) {
-        if (node.right) {
-          return loop(node.right);
-        } else {
-          return node.right = new Node(data);
-        }
+    if (data <= this.data) {
+      if (this.left) {
+        return this.left.insert(data);
+      } else {
+        return this.left = new Node(data);
       }
     }
 
-    loop(this);
+    if (data > this.data) {
+      if (this.right) {
+        return this.right.insert(data);
+      } else {
+        return this.right = new Node(data);
+      }
+    }
   }
 }
 
