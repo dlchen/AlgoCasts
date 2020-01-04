@@ -13,15 +13,12 @@
 
 function levelWidth(root) {
 
-  let curr = root ? [root] : [];
-  let next = [];
+  let levelNodes = root ? [root] : [];
   const counters = [];
 
-  while (curr.length || next.length) {
-    counters.push(curr.length);
-    curr.forEach(node => next.push(...node.children));
-    curr = next
-    next = [];
+  while (levelNodes.length) {
+    counters.push(levelNodes.length);
+    levelNodes = levelNodes.map(node => node.children).flat();
   }
 
   return counters;
