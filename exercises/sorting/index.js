@@ -48,23 +48,19 @@ function mergeSort(arr) {
 
 function merge(left, right) {
 
-  const loop = (merged, left, right) => {
+  if (!left.length) return right;
+  if (!right.length) return left;
+  
+  const headLeft = left[0];
+  const tailLeft = left.slice(1);
+  const headRight = right[0];
+  const tailRight = right.slice(1);
 
-    if (!left.length && !right.length) return merged;
-    if (!left.length) return merged.concat(right);
-    if (!right.length) return merged.concat(left);
-    const headLeft = left[0];
-    const tailLeft = left.slice(1);
-    const headRight = right[0];
-    const tailRight = right.slice(1);
-    if (headLeft < headRight) {
-      return loop(merged.concat([headLeft]), tailLeft, right);
-    } else {
-      return loop(merged.concat([headRight]), left, tailRight);
-    }
+  if (headLeft < headRight) {
+    return [headLeft].concat(merge(tailLeft, right));
+  } else {
+    return [headRight].concat(merge(left, tailRight));
   }
-
-  return loop([], left, right);
 }
 
 module.exports = { bubbleSort, selectionSort, mergeSort, merge };
